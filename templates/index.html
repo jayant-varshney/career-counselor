@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerAI – IBM Granite Powered Career Counselor</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+<!-- ───── NAVBAR ───── -->
+<nav class="navbar navbar-dark sticky-top px-3 px-md-4">
+  <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+    <span class="brand-icon"><i class="bi bi-stars"></i></span>
+    <span class="brand-text">Career<span class="accent">AI</span></span>
+  </a>
+  <div class="d-flex align-items-center gap-2">
+    <span class="powered-badge">Powered by IBM Granite</span>
+    <button class="btn btn-sm btn-outline-accent d-md-none" id="mobileMenuBtn"
+            data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
+      <i class="bi bi-list"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- ───── LAYOUT ───── -->
+<div class="app-layout">
+
+  <!-- SIDEBAR (desktop) -->
+  <aside class="sidebar d-none d-md-flex flex-column" id="desktopSidebar">
+    <div class="sidebar-inner">
+      <nav class="sidebar-nav flex-grow-1">
+        <button class="nav-item active" data-section="dashboard">
+          <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-section="profile">
+          <i class="bi bi-person-circle"></i><span>My Profile</span>
+        </button>
+        <button class="nav-item" data-section="chat">
+          <i class="bi bi-chat-dots"></i><span>AI Chat</span>
+        </button>
+        <button class="nav-item" data-section="roadmap">
+          <i class="bi bi-signpost-split"></i><span>Career Roadmap</span>
+        </button>
+        <button class="nav-item" data-section="certifications">
+          <i class="bi bi-award"></i><span>Certifications</span>
+        </button>
+        <button class="nav-item" data-section="skills">
+          <i class="bi bi-tools"></i><span>Skills</span>
+        </button>
+        <button class="nav-item" data-section="projects">
+          <i class="bi bi-code-slash"></i><span>Projects</span>
+        </button>
+        <button class="nav-item" data-section="resume">
+          <i class="bi bi-file-earmark-person"></i><span>Resume Tips</span>
+        </button>
+        <button class="nav-item" data-section="interview">
+          <i class="bi bi-mic"></i><span>Interview Prep</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <small class="text-muted">IBM Granite · watsonx.ai</small>
+      </div>
+    </div>
+  </aside>
+
+  <!-- OFFCANVAS SIDEBAR (mobile) -->
+  <div class="offcanvas offcanvas-start offcanvas-dark" tabindex="-1" id="sidebarOffcanvas">
+    <div class="offcanvas-header">
+      <h6 class="offcanvas-title accent">CareerAI Navigation</h6>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+      <nav class="sidebar-nav sidebar-nav--mobile">
+        <button class="nav-item active" data-section="dashboard" data-bs-dismiss="offcanvas">
+          <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-section="profile" data-bs-dismiss="offcanvas">
+          <i class="bi bi-person-circle"></i><span>My Profile</span>
+        </button>
+        <button class="nav-item" data-section="chat" data-bs-dismiss="offcanvas">
+          <i class="bi bi-chat-dots"></i><span>AI Chat</span>
+        </button>
+        <button class="nav-item" data-section="roadmap" data-bs-dismiss="offcanvas">
+          <i class="bi bi-signpost-split"></i><span>Career Roadmap</span>
+        </button>
+        <button class="nav-item" data-section="certifications" data-bs-dismiss="offcanvas">
+          <i class="bi bi-award"></i><span>Certifications</span>
+        </button>
+        <button class="nav-item" data-section="skills" data-bs-dismiss="offcanvas">
+          <i class="bi bi-tools"></i><span>Skills</span>
+        </button>
+        <button class="nav-item" data-section="projects" data-bs-dismiss="offcanvas">
+          <i class="bi bi-code-slash"></i><span>Projects</span>
+        </button>
+        <button class="nav-item" data-section="resume" data-bs-dismiss="offcanvas">
+          <i class="bi bi-file-earmark-person"></i><span>Resume Tips</span>
+        </button>
+        <button class="nav-item" data-section="interview" data-bs-dismiss="offcanvas">
+          <i class="bi bi-mic"></i><span>Interview Prep</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ── SECTION: DASHBOARD ── -->
+    <section id="section-dashboard" class="content-section active">
+      <div class="section-header">
+        <h2><i class="bi bi-speedometer2 accent"></i> Career Dashboard</h2>
+        <p class="text-muted">Your personalized AI career summary powered by IBM Granite</p>
+      </div>
+
+      <!-- Hero welcome card -->
+      <div class="hero-card mb-4">
+        <div class="hero-card__body">
+          <div>
+            <h3 class="hero-card__title">Welcome to <span class="accent">CareerAI</span></h3>
+            <p class="hero-card__sub">
+              Fill in your <strong>profile</strong> and click <strong>Generate Dashboard</strong> to receive
+              a fully personalized AI career analysis powered by IBM Granite on watsonx.ai.
+            </p>
+            <button class="btn btn-accent" id="btnDashboard">
+              <i class="bi bi-lightning-charge-fill me-1"></i>Generate Dashboard
+            </button>
+          </div>
+          <div class="hero-card__icon d-none d-sm-block">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard output -->
+      <div id="dashboardOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-stars me-2 accent"></i>AI Career Analysis</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="dashboardContent"></div>
+      </div>
+
+      <!-- Quick stats row -->
+      <div class="row g-3 mt-2" id="statsRow">
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-card__icon bg-accent-soft"><i class="bi bi-bullseye accent"></i></div>
+            <div class="stat-card__body">
+              <div class="stat-card__value" id="statGoal">–</div>
+              <div class="stat-card__label">Career Goal</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-card__icon bg-purple-soft"><i class="bi bi-mortarboard" style="color:#a78bfa"></i></div>
+            <div class="stat-card__body">
+              <div class="stat-card__value" id="statEducation">–</div>
+              <div class="stat-card__label">Education</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-card__icon bg-green-soft"><i class="bi bi-check2-circle" style="color:#34d399"></i></div>
+            <div class="stat-card__body">
+              <div class="stat-card__value" id="statSkillsCount">–</div>
+              <div class="stat-card__label">Skills Listed</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-card__icon bg-orange-soft"><i class="bi bi-stars" style="color:#fb923c"></i></div>
+            <div class="stat-card__body">
+              <div class="stat-card__value accent">AI</div>
+              <div class="stat-card__label">IBM Granite</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: PROFILE ── -->
+    <section id="section-profile" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-person-circle accent"></i> Student Profile</h2>
+        <p class="text-muted">Tell CareerAI about yourself for fully personalized guidance</p>
+      </div>
+      <div class="card-dark p-4">
+        <form id="profileForm" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control form-control-dark" id="profileName"
+                     placeholder="e.g. Priya Sharma" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Education Level</label>
+              <select class="form-select form-control-dark" id="profileEducation">
+                <option value="">Select education level</option>
+                <option>High School</option>
+                <option>Bachelor's Degree – Computer Science</option>
+                <option>Bachelor's Degree – Engineering</option>
+                <option>Bachelor's Degree – Other</option>
+                <option>Master's Degree</option>
+                <option>PhD</option>
+                <option>Bootcamp Graduate</option>
+                <option>Self-taught</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Interests / Passions</label>
+              <input type="text" class="form-control form-control-dark" id="profileInterests"
+                     placeholder="e.g. Machine Learning, Web Dev, Cybersecurity" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Current Skills</label>
+              <input type="text" class="form-control form-control-dark" id="profileSkills"
+                     placeholder="e.g. Python, HTML, SQL, Git" />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Career Goal</label>
+              <div class="career-goal-grid" id="careerGoalGrid">
+                <button type="button" class="goal-chip" data-goal="AI/ML Engineer">🤖 AI / ML Engineer</button>
+                <button type="button" class="goal-chip" data-goal="Data Scientist">📊 Data Scientist</button>
+                <button type="button" class="goal-chip" data-goal="Full Stack Developer">🌐 Full Stack Developer</button>
+                <button type="button" class="goal-chip" data-goal="Cloud Engineer">☁️ Cloud Engineer</button>
+                <button type="button" class="goal-chip" data-goal="Cybersecurity Analyst">🔒 Cybersecurity Analyst</button>
+                <button type="button" class="goal-chip" data-goal="DevOps Engineer">⚙️ DevOps Engineer</button>
+                <button type="button" class="goal-chip" data-goal="Mobile Developer">📱 Mobile Developer</button>
+                <button type="button" class="goal-chip" data-goal="Blockchain Developer">⛓️ Blockchain Developer</button>
+                <button type="button" class="goal-chip" data-goal="Product Manager">📋 Product Manager</button>
+                <button type="button" class="goal-chip" data-goal="UI/UX Designer">🎨 UI / UX Designer</button>
+              </div>
+              <input type="text" class="form-control form-control-dark mt-2" id="profileGoal"
+                     placeholder="Or type a custom career goal…" />
+            </div>
+            <div class="col-12 d-flex gap-2 flex-wrap">
+              <button type="submit" class="btn btn-accent">
+                <i class="bi bi-save2 me-1"></i>Save Profile
+              </button>
+              <button type="button" class="btn btn-outline-secondary" id="btnClearProfile">
+                <i class="bi bi-x-circle me-1"></i>Clear
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Profile preview -->
+      <div id="profilePreview" class="profile-preview mt-4 d-none">
+        <h5 class="mb-3 accent"><i class="bi bi-person-check me-2"></i>Saved Profile</h5>
+        <div class="row g-2" id="profilePreviewContent"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: AI CHAT ── -->
+    <section id="section-chat" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-chat-dots accent"></i> AI Career Chat</h2>
+        <p class="text-muted">Ask CareerAI anything about your career path</p>
+      </div>
+      <div class="chat-container card-dark">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg chat-msg--ai">
+            <div class="chat-msg__avatar"><i class="bi bi-stars"></i></div>
+            <div class="chat-msg__bubble">
+              <strong>CareerAI</strong>
+              <p>Hello! I'm CareerAI, powered by IBM Granite on watsonx.ai. 👋<br>
+              Save your profile and ask me anything — career paths, skills to learn, interview tips, or how to break into a new field. I'm here to guide you!</p>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <div class="chat-suggestions mb-2" id="chatSuggestions">
+            <button class="suggestion-chip" data-q="What career path suits my profile?">What career path suits me?</button>
+            <button class="suggestion-chip" data-q="What skills should I learn first?">What skills to learn first?</button>
+            <button class="suggestion-chip" data-q="How do I get my first job in tech?">How to get my first tech job?</button>
+            <button class="suggestion-chip" data-q="What salary can I expect?">Expected salary range?</button>
+          </div>
+          <div class="d-flex gap-2">
+            <textarea class="form-control form-control-dark chat-textarea" id="chatInput"
+                      placeholder="Ask about your career…" rows="2"></textarea>
+            <button class="btn btn-accent btn-send" id="btnSendChat">
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: ROADMAP ── -->
+    <section id="section-roadmap" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-signpost-split accent"></i> Career Roadmap</h2>
+        <p class="text-muted">Your AI-generated step-by-step career path</p>
+      </div>
+      <button class="btn btn-accent mb-4" id="btnRoadmap">
+        <i class="bi bi-lightning-charge-fill me-1"></i>Generate My Roadmap
+      </button>
+      <div id="roadmapOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-signpost-split me-2 accent"></i>Personalized Career Roadmap</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="roadmapContent"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: CERTIFICATIONS ── -->
+    <section id="section-certifications" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-award accent"></i> Recommended Certifications</h2>
+        <p class="text-muted">Industry-recognized certifications curated for your career goal</p>
+      </div>
+      <button class="btn btn-accent mb-4" id="btnCertifications">
+        <i class="bi bi-lightning-charge-fill me-1"></i>Get Certifications
+      </button>
+      <div id="certificationsOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-award me-2 accent"></i>Certification Recommendations</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="certificationsContent"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: SKILLS ── -->
+    <section id="section-skills" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-tools accent"></i> Technical Skills</h2>
+        <p class="text-muted">Skills you need to master for your target role</p>
+      </div>
+      <button class="btn btn-accent mb-4" id="btnSkills">
+        <i class="bi bi-lightning-charge-fill me-1"></i>Get Skills Guide
+      </button>
+      <div id="skillsOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-tools me-2 accent"></i>Skills Recommendations</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="skillsContent"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: PROJECTS ── -->
+    <section id="section-projects" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-code-slash accent"></i> Suggested Projects</h2>
+        <p class="text-muted">Build your portfolio with AI-recommended hands-on projects</p>
+      </div>
+      <button class="btn btn-accent mb-4" id="btnProjects">
+        <i class="bi bi-lightning-charge-fill me-1"></i>Get Project Ideas
+      </button>
+      <div id="projectsOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-code-slash me-2 accent"></i>Project Suggestions</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="projectsContent"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: RESUME ── -->
+    <section id="section-resume" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-file-earmark-person accent"></i> Resume Improvement Tips</h2>
+        <p class="text-muted">Optimize your resume with AI-driven advice</p>
+      </div>
+      <button class="btn btn-accent mb-4" id="btnResume">
+        <i class="bi bi-lightning-charge-fill me-1"></i>Get Resume Tips
+      </button>
+      <div id="resumeOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-file-earmark-person me-2 accent"></i>Resume Improvement Guide</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="resumeContent"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: INTERVIEW ── -->
+    <section id="section-interview" class="content-section">
+      <div class="section-header">
+        <h2><i class="bi bi-mic accent"></i> Interview Preparation</h2>
+        <p class="text-muted">Ace your interviews with IBM Granite's targeted coaching</p>
+      </div>
+      <button class="btn btn-accent mb-4" id="btnInterview">
+        <i class="bi bi-lightning-charge-fill me-1"></i>Get Interview Prep
+      </button>
+      <div id="interviewOutput" class="ai-output-card d-none">
+        <div class="ai-output-card__header">
+          <span><i class="bi bi-mic me-2 accent"></i>Interview Preparation Guide</span>
+          <span class="badge-model">IBM Granite</span>
+        </div>
+        <div class="ai-output-card__body" id="interviewContent"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay d-none" id="loadingOverlay">
+  <div class="loading-inner">
+    <div class="spinner-granite">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring spinner-ring--2"></div>
+      <div class="spinner-ring spinner-ring--3"></div>
+    </div>
+    <p class="loading-text">IBM Granite is thinking…</p>
+    <p class="loading-sub text-muted">Generating your personalized insights</p>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="appToast" class="toast align-items-center border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastBody">Saved!</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
